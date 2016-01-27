@@ -1,0 +1,26 @@
+{
+  "name": "mycar",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Ivan Stefanov <ivan.stefanov@scalefocus.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "font-awesome": "~4.5.0",
+    "angular": "angularjs#~1.4.9",
+    "angular-ui-router": "~0.2.17"
+  }
+}
