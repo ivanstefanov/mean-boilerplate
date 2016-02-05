@@ -3,10 +3,10 @@ var nodemon = require('nodemon');
 
 
 //inects js and css files into index.html
-//for doing that, you must put code simmilar to
+//for doing that, you must put code similar to
 //<!-- bower:js -->
 //<!-- endbower-->
-//into the html soure to indicate where the js(or css) files should be injected and to run the task
+//into the html source to indicate where the js(or css) files should be injected and to run the task
 //wiredep looks for the bower.json file into the included packages and adds their dependencies too
 //that's why, when inserting bootstrap.js(from our bower.json), it injects and jquery.js(from bootstrap's bower.json)
 //if not all files are included, we must add "overrides" property into the wiredep options (or in bower.json file) and to add the files we need implicity
@@ -18,11 +18,11 @@ gulp.task('inject', function() {
   var inject = require('gulp-inject'); //injecting our own files(not these from bower)
 
   var injectSrc = gulp.src([
-                           './public/css/*.css',
-                           './public/*.js',
-                           './public/components/**/*.js'], {
-                            read: false
-                            });
+    './public/css/*.css',
+    './public/*.js',
+    './public/components/**/*.js'], {
+    read: false
+  });
 
   var injectOptions = {
     ignorePath: '/public'
@@ -31,9 +31,9 @@ gulp.task('inject', function() {
   var wiredupOptions = {
     bowerJson: require('./bower.json'), //show where is the bower.json to get the dependencies
     directory: './public/lib', //where is the directory to looking for the installed bower packets
-    ignorePath: '../../public', //this path goes away from the injected code (it's not necceserry)
+    ignorePath: '../../public', //this path goes away from the injected code (it's not necessary)
     //bootstrap have removed its css-file from the main-attribute in its bower.json file.
-    //Therefore the files won't be injected by wiredep, so it needs to be overideded
+    //Therefore the files won't be injected by wiredep, so it needs to be overrided
     overrides: {
       "bootstrap": {
         "main": [
@@ -41,22 +41,22 @@ gulp.task('inject', function() {
         "dist/css/bootstrap.css",
         "less/bootstrap.less"
         ]
-        },
-        "font-awesome": {
-          "main": [
+      },
+      "font-awesome": {
+        "main": [
           "css/font-awesome.min.css",
           "less/font-awesome.less",
           "scss/font-awesome.scss"
           ]
-        }
       }
-    };
+    }
+  };
 
   return gulp.src('./public/*.html') //pull the files to be injected
-    .pipe(wiredup(wiredupOptions)) //injet the bower css and js files using wiredup
-    .pipe(inject(injectSrc, injectOptions)) //injet our css and js files using gulp-inject
+    .pipe(wiredup(wiredupOptions)) //inject the bower css and js files using wiredup
+    .pipe(inject(injectSrc, injectOptions)) //inject our css and js files using gulp-inject
     .pipe(gulp.dest('./public')); //pipe them into the views
-    });
+});
 
 var jsFiles = ['*.js', 'src/**/*.js'];
 
@@ -66,12 +66,12 @@ gulp.task('serve', ['inject'], function() {
     delayTime: 1,
     env: {
       'PORT': 3000
-      },
-      watch: jsFiles
-    };
+    },
+    watch: jsFiles
+  };
 
-    return nodemon(options).on('restart', function(ev) {
-      console.log("restarting...");
-      });
+  return nodemon(options).on('restart', function(ev) {
+    console.log("restarting...");
+  });
 
-    });
+});

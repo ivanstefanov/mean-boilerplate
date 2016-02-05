@@ -15,6 +15,8 @@
     "wiredep": "^3.0.0"
   },
   "dependencies": {
-    "express": "^4.13.4"
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "mongoose": "^4.3.7"
   }
 }

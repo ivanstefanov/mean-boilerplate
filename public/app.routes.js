@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('app')
-  .config(['$stateProvider', '$urlRouterProvider', SetRoutes]);
+    .config(['$stateProvider', '$urlRouterProvider', SetRoutes]);
 
   function SetRoutes($stateProvider, $urlRouterProvider) {
     //for unmatched routes
@@ -10,10 +10,14 @@
 
     //Application Routes
     $stateProvider
-    .state('home', {
-      url: '',
-      templateUrl: 'components/home/home.html'
-    })
+      .state('home', {
+        url: '',
+        templateUrl: 'components/home/home.html'
+      })
+      .state('vehicle', {
+        url: '/vehicle',
+        templateUrl: 'components/vehicle/vehicle.html'
+      });
   }
 
 

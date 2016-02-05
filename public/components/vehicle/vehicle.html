@@ -1,0 +1,30 @@
+<div ng-controller="VehicleCtrl as vehicle">
+    <form>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Model</label>
+            <input type="text" class="form-control" id="vehicleModel" placeholder="Model" ng-model="vehicle.model">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Number</label>
+            <input type="text" class="form-control" id="vehicleNumber" placeholder="Number" ng-model="vehicle.number">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Engine Number</label>
+            <input type="text" class="form-control" id="vehicleEngineNumber" placeholder="Engine Number" ng-model="vehicle.engineNumber">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Year</label>
+            <input type="text" class="form-control" id="vehicleYear" placeholder="Year" ng-model="vehicle.year">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1">Color</label>
+            <input type="text" class="form-control" id="vehicleYear" placeholder="Color" ng-model="vehicle.color">
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" ng-model="vehicle.isActive">Active
+            </label>
+        </div>
+        <button type="submit" class="btn btn-default" ng-click="vehicle.saveVehicle()">Submit</button>
+    </form>
+</div>
