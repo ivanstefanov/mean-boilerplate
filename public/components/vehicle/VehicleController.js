@@ -3,45 +3,74 @@
 
   angular
     .module('app')
-    .controller('VehicleCtrl', VehicleCtrl)
+    .controller('VehiclesListCtrl', VehiclesListCtrl);
 
-  VehicleCtrl.$inject = ['$http']
+  VehiclesListCtrl.$inject = ['vehicleService'];
 
-  function VehicleCtrl($http) {
+  function VehiclesListCtrl(vehicleService) {
     var vm = this;
+    vm.vehicles = [];
+    vm.deleteVehicle = deleteVehicle;
 
-    vm.model;
-    vm.number;
-    vm.engineNumber;
-    vm.year;
-    vm.color;
-    vm.isActive;
+    /**
+     * Get the vehicles
+     */
+    function getVehicles() {
 
-    vm.saveVehicle = function() {
+      vehicleService.getVehicles()
+        .then(function(response) {
+            var result = response.data;
+            vm.vehicles = result;
+          },
+          function(response) {
+            console.dir(response);
+            toastr.error('Error retrieving the vehicles list: ' + response.data);
+          });
+    }
 
-      var formData = {
-        model: vm.model,
-        number: vm.number,
-        engineNumber: vm.engineNumber,
-        year: vm.year,
-        color: vm.color,
-        isActive: vm.isActive
-      };
+    function deleteVehicle(vehicleId) {
+      console.log(vehicleId);
 
-      $http({
-        method: 'POST',
-        url: '/vehicle',
-        data: $.param(formData),
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      }).then(function successCallback(response) {
-        console.dir(response);
-        toastr.info('The vehicle info has been saved: ' + response.statusText);
-      }, function errorCallback(response) {
-        console.dir(response);
-        toastr.error('The vehicle was unable to be saved: ' + response.data.message);
+      BootstrapDialog.show({
+        type: 'type-default',
+        title: '<strong>Delete Vehicle</strong>',
+        message: "Are you sure you want to delete the selected vehicle?",
+        buttons: [{
+            label: 'Yes',
+            action: function(dialogRef) {
+
+              vehicleService.deleteVehicles(vehicleId)
+                .then(function(response) {
+                    //var result = response.data;
+                    getVehicles();
+                    toastr.success('The vehicle has been deleted succesfully.');
+
+                  },
+                  function(response) {
+                    console.dir(response);
+                    toastr.error('Error retrieving the vehicles list: ' + response.data);
+                  });
+
+                  dialogRef.close();
+            }
+          },
+          {
+            label: 'Cancel',
+            action: function(dialogRef) {
+              dialogRef.close();
+            }
+          }
+        ]
       });
     }
+
+
+    function init() {
+      getVehicles();
+    }
+
+    init();
+
   }
+
 }());

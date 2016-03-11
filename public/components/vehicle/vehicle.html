@@ -1,30 +1,39 @@
-<div ng-controller="VehicleCtrl as vehicle">
-    <form>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Model</label>
-            <input type="text" class="form-control" id="vehicleModel" placeholder="Model" ng-model="vehicle.model">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Number</label>
-            <input type="text" class="form-control" id="vehicleNumber" placeholder="Number" ng-model="vehicle.number">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Engine Number</label>
-            <input type="text" class="form-control" id="vehicleEngineNumber" placeholder="Engine Number" ng-model="vehicle.engineNumber">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Year</label>
-            <input type="text" class="form-control" id="vehicleYear" placeholder="Year" ng-model="vehicle.year">
-        </div>
-        <div class="form-group">
-            <label for="exampleInputEmail1">Color</label>
-            <input type="text" class="form-control" id="vehicleYear" placeholder="Color" ng-model="vehicle.color">
-        </div>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" ng-model="vehicle.isActive">Active
-            </label>
-        </div>
-        <button type="submit" class="btn btn-default" ng-click="vehicle.saveVehicle()">Submit</button>
-    </form>
+<div ng-controller="VehiclesListCtrl as vehicles">
+  <h2>Vehicles</h2>
+  <img src="../../images/bear-loading.gif" id="loading" ng-if="vehicles.vehicles.length == 0">
+  <div ng-if="vehicles.vehicles.length > 0">
+  <a ui-sref="vehicle-addedit">[Add]</a>
+    <table class="table table-striped table-bordered table-condensed">
+        <thead>
+            <th>model</th>
+            <th>number</th>
+            <th>engineNumber</th>
+            <th>year</th>
+            <th>color</th>
+            <th>active</th>
+            <th>edit</th>
+            <th>delete</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="vehicle in vehicles.vehicles">
+                <td>{{vehicle.model}}</td>
+                <td>{{vehicle.number}}</td>
+                <td>{{vehicle.engineNumber}}</td>
+                <td>{{vehicle.year}}</td>
+                <td>{{vehicle.color}}</td>
+                <td><span class="glyphicon glyphicon-ok" ng-if="vehicle.isActive"></span></td>
+                <td>
+                    <a ui-sref="vehicle-addedit({vehicleId: vehicle._id})" class="btn">
+                        <span class="glyphicon glyphicon-edit"></span> Edit
+                    </a>
+                </td>
+                <td>
+                    <a class="btn" data-vehicle-id="{{vehicle._id}}" ng-click="vehicles.deleteVehicle(vehicle._id)">
+                        <span class="glyphicon glyphicon-remove"></span> delete
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
 </div>

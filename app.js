@@ -1,11 +1,15 @@
+'use strict';
+
 var express = require('express');
 var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-
+var Promise = require("bluebird");
 var app = express();
-var port = process.env.PORT || 8000;
 
-app.disable('x-powered-by') //remove power by header
+var config = require('./src/configuration/config.js');
+
+var port = config.web.port;
+
+app.disable('x-powered-by'); //remove power by header
 
 //To serve static files such as images, CSS files, and JavaScript files, use the express.static built-in middleware function in Express.
 //Express looks up the files relative to the static directory, so the name of the static directory is not part of the URL.
@@ -19,21 +23,35 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+//loging
+var logDirectory = config.logs.directory;
+var logger = require('./src/configuration/logger.js')(logDirectory);
+logger.debug('Log Directory: ' + logDirectory);
+require('./src/configuration/reuqest-logger.js')(app, logDirectory);
+
 //connect to db
-var mongoose = require('mongoose');
-var dbUrl = 'mongodb://root:123@ds055535.mongolab.com:55535/myvehicle';
-mongoose.connect(dbUrl);
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'error connecting to ' + dbUrl));
-db.once('open', function() {
-  console.log('connected successfully to ' + dbUrl + '...');
-});
+var dbUrl = config.db.url;
+logger.debug('DB URL:' + dbUrl);
+require('./src/configuration/db.js')(logger, dbUrl);
+
+//redis
+if (config.redis.enableRedis) {
+  var redisHost = config.redis.host;
+  var redisPort = config.redis.port;
+  var redisOptions = config.redis.options; //see https://github.com/NodeRedis/node_redis for available options
+  redisOptions.max_attempts = 2;
+  var redisClient = Promise.promisifyAll(require('./src/configuration/redis.js')(redisHost, redisPort, redisOptions, logger));
+}
+
+//log responses on error
+var responseLog = require('./src/helpers/log-helper.js')(logger);
+app.use(responseLog.logResponseBody);
 
 //Routes
 var router = express.Router();
 app.use('/api', router);
 
-var vehicleRouter = require('./src/routes/vehicleRoutes')(express);
+var vehicleRouter = require('./src/routes/vehicleRoutes')(express, redisClient, logger);
 app.use('/vehicle', vehicleRouter);
 
 // var router = express.Router();
@@ -62,15 +80,22 @@ router.get('/', function(req, res) {
 //   });
 // });
 
+//The 404 Route (ALWAYS Keep this as the last route)
+app.use('*', function(req, res) {
+  res.status(404).send('Page not found!');
+});
+
 //Error handling
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(500).send({
-    error: 'Something failed!'
+app.use(function(req, res) {
+  res.status(500).json({
+    info: 'Something failed!'
   });
 });
 
-app.listen(port, function(err) {
+
+
+app.listen(port, function() {
   console.log('Running server on port: ' + port);
 });

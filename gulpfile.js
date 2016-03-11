@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var nodemon = require('nodemon');
+var childProcess = require('child_process');
 
 
 //inects js and css files into index.html
@@ -58,9 +59,20 @@ gulp.task('inject', function() {
     .pipe(gulp.dest('./public')); //pipe them into the views
 });
 
+//starting redis server
+gulp.task('redis', function() {
+  console.log('starting redis...');
+  childProcess.exec('redis-server', function(err, stdout, stderr) {
+    console.log(stdout);
+    if (err !== null) {
+      console.log('redis-server error: ' + err);
+    };
+  });
+});
+
 var jsFiles = ['*.js', 'src/**/*.js'];
 
-gulp.task('serve', ['inject'], function() {
+gulp.task('serve', ['redis', 'inject'], function() {
   var options = {
     script: 'app.js',
     delayTime: 1,

@@ -1,0 +1,66 @@
+<div ng-controller="AddVehicleCtrl as vehicle">
+    <h2 id="title"></h2>
+    <form name="vehicleForm" novalidate>
+        <div class="form-group" ng-class="{ 'has-error': vehicleForm.vehicleModel.$touched && vehicleForm.vehicleModel.$invalid }">
+            <label for="vehicleModel">Model</label>
+            <input type="text" class="form-control" id="vehicleModel" name="vehicleModel" placeholder="Model" ng-model="vehicle.model" required>
+
+            <div class="help-block" ng-messages="vehicleForm.vehicleModel.$error" ng-if="vehicleForm.vehicleModel.$touched">
+                <p ng-message="required">Vehicle name is required.</p>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': vehicleForm.vehicleNumber.$touched && vehicleForm.vehicleNumber.$invalid }">
+            <label for="vehicleNumber">Number</label>
+            <input type="text" class="form-control" id="vehicleNumber" name="vehicleNumber" placeholder="Number" ng-model="vehicle.number"
+             ng-minlength="6" ng-maxlength="20" required>
+
+             <div class="help-block" ng-messages="vehicleForm.vehicleNumber.$error" ng-if="vehicleForm.vehicleNumber.$touched">
+                <p ng-message="required">Vehicle number is required.</p>
+                <p ng-message="minlength">Vehicle number must be at least 6 characters.</p>
+                <p ng-message="maxlength">Vehicle number must be under 20 characters.</p>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': vehicleForm.vehicleEngineNumber.$touched && vehicleForm.vehicleEngineNumber.$invalid }">
+            <label for="vehicleEngineNumber">Engine Number</label>
+            <input type="text" class="form-control" id="vehicleEngineNumber" name="vehicleEngineNumber" placeholder="Engine Number" ng-model="vehicle.engineNumber" ng-minlength="6" ng-maxlength="20" required>
+
+            <div class="help-block" ng-messages="vehicleForm.vehicleEngineNumber.$error" ng-if="vehicleForm.vehicleEngineNumber.$touched">
+                <p ng-message="required">Vehicle engine number is required.</p>
+                <p ng-message="minlength">Vehicle engine number must be at least 6 characters.</p>
+                <p ng-message="maxlength">Vehicle engine number must be under 20 characters.</p>
+            </div>
+        </div>
+
+        <div class="form-group" ng-class="{ 'has-error': vehicleForm.vehicleYear.$touched && vehicleForm.vehicleYear.$invalid }">
+            <label for="vehicleYear">Year of manufacture</label>
+            <input type="number" min="1800" max="2200" class="form-control" id="vehicleYear" name="vehicleYear" placeholder="Year" ng-model="vehicle.year" ng-minlength="4" ng-maxlength="4" required>
+
+            <div class="help-block" ng-messages="vehicleForm.vehicleYear.$error" ng-if="vehicleForm.vehicleYear.$touched">
+                <p ng-message="required">Year of manufacture is required.</p>
+                <p ng-message="minlength">Year of manufacture must be 4 numbers.</p>
+                <p ng-message="maxlength">Year of manufacture must be 4 numbers.</p>
+                <p ng-message="min">Year of manufacture must be after 1800.</p>
+                <p ng-message="max">Year of manufacture must be before 2200.</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="vehicleColor">Color</label>
+            <input type="text" class="form-control" id="vehicleColor" placeholder="Color" ng-model="vehicle.color">
+        </div>
+
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" ng-model="vehicle.isActive">Active
+                </label>
+            </div>
+        </div>
+
+        <a class="btn btn-default" ui-sref="vehicle">Back</a>
+        <button id="saveVehicle" type="submit" class="btn btn-default" ng-click="vehicle.saveVehicle()" ng-disabled="vehicleForm.$invalid">Save</button>
+
+    </form>
+</div>

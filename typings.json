@@ -1,0 +1,21 @@
+{
+  "name": "mycar",
+  "dependencies": {},
+  "devDependencies": {},
+  "ambientDependencies": {
+    "angular": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#1c4a34873c9e70cce86edd0e61c559e43dfa5f75",
+    "angular-ui-router": "github:DefinitelyTyped/DefinitelyTyped/angular-ui-router/angular-ui-router.d.ts#655f8c1bf3c71b0e1ba415b36309604f79326ac8",
+    "bluebird": "github:DefinitelyTyped/DefinitelyTyped/bluebird/bluebird.d.ts#dd328830dddffbe19e9addd7cf8532cbd3600816",
+    "bootstrap": "github:DefinitelyTyped/DefinitelyTyped/bootstrap/bootstrap.d.ts#4de74cb527395c13ba20b438c3a7a419ad931f1c",
+    "express": "github:DefinitelyTyped/DefinitelyTyped/express/express.d.ts#dd638012d63e069f2c99d06ef4dcc9616a943ee4",
+    "gulp": "github:DefinitelyTyped/DefinitelyTyped/gulp/gulp.d.ts#052725d74978d6b8d7c4ff537b5a3b21ee755a49",
+    "lodash": "github:DefinitelyTyped/DefinitelyTyped/lodash/lodash.d.ts#c8630523ef2ee3fb42fe65cc17af5b1b56e611bc",
+    "mongoose": "github:DefinitelyTyped/DefinitelyTyped/mongoose/mongoose.d.ts#cebde64b3a1d63d07ee7c7dbc49b631ce220d027",
+    "morgan": "github:DefinitelyTyped/DefinitelyTyped/morgan/morgan.d.ts#4566a913a3667dc627851d0f7f38ffcd0e7cf6ea",
+    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#366b936e62a6244a15f011e0ee0559b903d1dd65",
+    "orchestrator": "github:DefinitelyTyped/DefinitelyTyped/orchestrator/orchestrator.d.ts#422b006d39dd37fc667ce5464967ee3ff6135092",
+    "redis": "github:DefinitelyTyped/DefinitelyTyped/redis/redis.d.ts#bf4e9e95314a59977d71e850508d40913b145c1d",
+    "serve-static": "github:DefinitelyTyped/DefinitelyTyped/serve-static/serve-static.d.ts#0fa4e9e61385646ea6a4cba2aef357353d2ce77f",
+    "toastr": "github:DefinitelyTyped/DefinitelyTyped/toastr/toastr.d.ts#a36e6ad2f472741b1c22c2af955bf13b7c62e146"
+  }
+}

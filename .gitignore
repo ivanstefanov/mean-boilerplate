@@ -3,3 +3,12 @@ node_modules
 
 # ignore bower packages
 public/lib/**
+
+# ignore typings TypeScript definitions
+typings
+
+# ignore typings visual studio code config
+.vscode
+
+# ignore log files
+logs
